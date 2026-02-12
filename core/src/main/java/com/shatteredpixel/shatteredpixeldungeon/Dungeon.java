@@ -546,8 +546,7 @@ public class Dungeon {
 		int souLeftThisSet;
 		//3 SOU each floor set
 		//minha mudança: mínimo de 3, mas até 4 podem dropar
-		int souForSet = Random.Int(3,4);
-		souLeftThisSet = souForSet - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * souForSet);
+		souLeftThisSet = Random.Int(3,4) - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 3);
 		if (souLeftThisSet <= 0) return false;
 
 		int floorThisSet = (depth % 5);
