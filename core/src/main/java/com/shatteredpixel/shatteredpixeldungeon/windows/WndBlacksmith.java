@@ -110,7 +110,7 @@ public class WndBlacksmith extends Window {
 		pickaxe.enable(Blacksmith.Quest.pickaxe != null && Blacksmith.Quest.favor >= pickaxeCost);
 		buttons.add(pickaxe);
 
-		int reforgecost = 500 + 1000*Blacksmith.Quest.reforges;
+		int reforgecost = 500 + 250*Blacksmith.Quest.reforges;
 		RedButton reforge = new RedButton(Messages.get(this, "reforge", reforgecost), 6){
 			@Override
 			protected void onClick() {
@@ -120,7 +120,7 @@ public class WndBlacksmith extends Window {
 		reforge.enable(Blacksmith.Quest.favor >= reforgecost);
 		buttons.add(reforge);
 
-		int hardenCost = 500 + 1000*Blacksmith.Quest.hardens;
+		int hardenCost = 250 + 250*Blacksmith.Quest.hardens;
 		RedButton harden = new RedButton(Messages.get(this, "harden", hardenCost), 6){
 			@Override
 			protected void onClick() {
@@ -140,7 +140,7 @@ public class WndBlacksmith extends Window {
 		upgrade.enable(Blacksmith.Quest.favor >= upgradeCost);
 		buttons.add(upgrade);
 
-		RedButton smith = new RedButton(Messages.get(this, "smith", 2000), 6){
+		RedButton smith = new RedButton(Messages.get(this, "smith", 1500), 6){
 			@Override
 			protected void onClick() {
 				GameScene.show(new WndOptions(
@@ -153,7 +153,7 @@ public class WndBlacksmith extends Window {
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							Blacksmith.Quest.favor -= 2000;
+							Blacksmith.Quest.favor -= 1500;
 							Blacksmith.Quest.smiths++;
 							WndBlacksmith.this.hide();
 							GameScene.show(new WndSmith(troll, hero));
@@ -162,7 +162,7 @@ public class WndBlacksmith extends Window {
 				});
 			}
 		};
-		smith.enable(Blacksmith.Quest.favor >= 2000);
+		smith.enable(Blacksmith.Quest.favor >= 1500);
 		buttons.add(smith);
 
 		RedButton cashOut = new RedButton(Messages.get(this, "cashout"), 6){
@@ -171,14 +171,14 @@ public class WndBlacksmith extends Window {
 				GameScene.show(new WndOptions(
 						troll.sprite(),
 						Messages.titleCase( troll.name() ),
-						Messages.get(WndBlacksmith.class, "cashout_verify", Blacksmith.Quest.favor),
+						Messages.get(WndBlacksmith.class, "cashout_verify", Blacksmith.Quest.favor*4),
 						Messages.get(WndBlacksmith.class, "cashout_yes"),
 						Messages.get(WndBlacksmith.class, "cashout_no")
 				){
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							new Gold(Blacksmith.Quest.favor).doPickUp(Dungeon.hero, Dungeon.hero.pos);
+							new Gold(Blacksmith.Quest.favor*4).doPickUp(Dungeon.hero, Dungeon.hero.pos);
 							Blacksmith.Quest.favor = 0;
 							WndBlacksmith.this.hide();
 						}
@@ -285,17 +285,21 @@ public class WndBlacksmith extends Window {
 					}
 
 					//preserves enchant/glyphs if present
-					if (first instanceof Weapon && ((Weapon) first).hasGoodEnchant()){
-						((Weapon) first).upgrade(true);
-					} else if (first instanceof Armor && ((Armor) first).hasGoodGlyph()){
-						((Armor) first).upgrade(true);
-					} else {
-						first.upgrade();
+					int itemLevel = 0;
+					while ( itemLevel <= second.level() ) {
+						if (first instanceof Weapon && ((Weapon) first).hasGoodEnchant()){
+							((Weapon) first).upgrade(true);
+						} else if (first instanceof Armor && ((Armor) first).hasGoodGlyph()){
+							((Armor) first).upgrade(true);
+						} else {
+							first.upgrade();
+						}
+						itemLevel++;
 					}
 					Badges.validateItemLevelAquired( first );
 					Item.updateQuickslot();
 
-					Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.reforges;
+					Blacksmith.Quest.favor -= 500 + 250*Blacksmith.Quest.reforges;
 					Blacksmith.Quest.reforges++;
 
 					if (!Blacksmith.Quest.rewardsAvailable()){
@@ -391,7 +395,7 @@ public class WndBlacksmith extends Window {
 					((Armor) item).glyphHardened = true;
 				}
 
-				Blacksmith.Quest.favor -= 500 + 1000*Blacksmith.Quest.hardens;
+				Blacksmith.Quest.favor -= 250 + 250*Blacksmith.Quest.hardens;
 				Blacksmith.Quest.hardens++;
 
 				WndBlacksmith.this.hide();

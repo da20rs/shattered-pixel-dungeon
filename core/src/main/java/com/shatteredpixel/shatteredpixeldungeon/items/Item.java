@@ -414,11 +414,11 @@ public class Item implements Bundlable {
 		
 		return this;
 	}
-	
+
 	public Item degrade() {
 		
 		this.level--;
-		
+
 		return this;
 	}
 	

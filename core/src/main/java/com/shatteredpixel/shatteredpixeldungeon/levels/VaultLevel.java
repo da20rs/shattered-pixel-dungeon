@@ -23,6 +23,8 @@ package com.shatteredpixel.shatteredpixeldungeon.levels;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Hunger;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
@@ -108,8 +110,8 @@ public class VaultLevel extends CityLevel {
 		for (int i = 0; i < 20; i++){
 			Item item = Generator.randomUsingDefaults(Random.oneOf(
 					Generator.Category.WEAPON, Generator.Category.WEAPON, Generator.Category.WEAPON,
-					Generator.Category.ARMOR,
-					Generator.Category.WAND,
+					Generator.Category.FOOD,
+					Generator.Category.POTION,
 					Generator.Category.RING));
 			//regrowth is disallowed as it can be used to farm HP regen
 			if (item instanceof WandOfRegrowth){

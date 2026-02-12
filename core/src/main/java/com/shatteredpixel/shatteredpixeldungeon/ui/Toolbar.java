@@ -123,7 +123,7 @@ public class Toolbar extends Component {
 
 					String[] slotNames = new String[6];
 					Image[] slotIcons = new Image[6];
-					for (int i = 0; i < 6; i++){
+					for (int i = 0; i < 9; i++){
 						Item item = Dungeon.quickslot.getItem(i);
 
 						if (item != null && !Dungeon.quickslot.isPlaceholder(i) &&
@@ -426,6 +426,7 @@ public class Toolbar extends Component {
 								Belongings b = Dungeon.hero.belongings;
 								if (b.ring() != null) items.add(0, b.ring());
 								if (b.misc() != null) items.add(0, b.misc());
+								if (b.misc2() != null) items.add(0, b.misc2());
 								if (b.artifact() != null) items.add(0, b.artifact());
 								if (b.armor() != null) items.add(0, b.armor());
 								if (b.weapon() != null) items.add(0, b.weapon());
@@ -487,7 +488,7 @@ public class Toolbar extends Component {
 
 		float right = width;
 
-		int quickslotsToShow = 4;
+		int quickslotsToShow = 8;
 		if (PixelScene.uiCamera.width > 152) quickslotsToShow ++;
 		if (PixelScene.uiCamera.width > 170) quickslotsToShow ++;
 
@@ -497,7 +498,7 @@ public class Toolbar extends Component {
 			startingSlot = swappedQuickslots ? 3 : 0;
 			btnSwap.visible = true;
 			btnSwap.active = lastEnabled;
-			QuickSlotButton.lastVisible = 6;
+			QuickSlotButton.lastVisible = 10;
 		} else {
 			startingSlot = 0;
 			btnSwap.visible = btnSwap.active = false;

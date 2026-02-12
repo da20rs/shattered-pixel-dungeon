@@ -361,6 +361,7 @@ public class Generator {
 			
 			SCROLL.classes = new Class<?>[]{
 					ScrollOfUpgrade.class, //3 drop every chapter, see Dungeon.souNeeded()
+					//minha alteração: há uma minúscula chance de um SoU extra
 					ScrollOfIdentify.class,
 					ScrollOfRemoveCurse.class,
 					ScrollOfMirrorImage.class,
@@ -374,6 +375,7 @@ public class Generator {
 					ScrollOfTransmutation.class
 			};
 			SCROLL.defaultProbs  = new float[]{ 0, 3, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1 };
+			//minha alteração: uma chance um pouco maior de pergaminho de transmutação
 			SCROLL.defaultProbs2 = new float[]{ 0, 3, 2, 2, 1, 2, 1, 1, 1, 1, 1, 0 };
 			SCROLL.probs = SCROLL.defaultProbs.clone();
 			
@@ -391,7 +393,7 @@ public class Generator {
 					StoneOfFear.class,
 					StoneOfAugmentation.class  //1 is sold in each shop
 			};
-			STONE.defaultProbs = new float[]{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 };
+			STONE.defaultProbs = new float[]{ 0.5f, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0.5f };
 			STONE.probs = STONE.defaultProbs.clone();
 
 			WAND.classes = new Class<?>[]{
@@ -499,7 +501,7 @@ public class Generator {
 					ThrowingSpike.class,
 					Dart.class
 			};
-			MIS_T1.defaultProbs = new float[]{ 3, 3, 3, 0 };
+			MIS_T1.defaultProbs = new float[]{ 3, 3, 3, 1 };
 			MIS_T1.probs = MIS_T1.defaultProbs.clone();
 			
 			MIS_T2.classes = new Class<?>[]{
@@ -538,7 +540,7 @@ public class Generator {
 					Food.class,
 					Pasty.class,
 					MysteryMeat.class };
-			FOOD.defaultProbs = new float[]{ 4, 1, 0 };
+			FOOD.defaultProbs = new float[]{ 4, 1.5f, 0 };
 			FOOD.probs = FOOD.defaultProbs.clone();
 			
 			RING.classes = new Class<?>[]{
@@ -611,10 +613,10 @@ public class Generator {
 	}
 
 	private static final float[][] floorSetTierProbs = new float[][] {
-			{0, 75, 20,  4,  1},
-			{0, 25, 50, 20,  5},
-			{0,  0, 40, 50, 10},
-			{0,  0, 20, 40, 40},
+			{0, 70, 25,  4,  1},
+			{0, 20, 50, 25,  5},
+			{0,  0, 35, 55, 10},
+			{0,  0, 15, 40, 45},
 			{0,  0,  0, 20, 80}
 	};
 

@@ -112,7 +112,7 @@ public class SpiritForm extends ClericSpell {
 			type = buffType.POSITIVE;
 		}
 
-		public static final float DURATION = 20f;
+		public static final float DURATION = 40f;
 
 		private Bundlable effect;
 

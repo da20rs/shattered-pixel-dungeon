@@ -225,9 +225,10 @@ public class MagesStaff extends MeleeWeapon {
 
 		if (owner == Dungeon.hero && Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
 			Talent.WandPreservationCounter counter = Buff.affect(Dungeon.hero, Talent.WandPreservationCounter.class);
-			if (counter.count() == 0){
+			if (counter.count() <= 50){
 				counter.countUp(1);
-				this.wand.level(0);
+//				this.wand.level(0);
+				level(this.trueLevel() - this.wand.trueLevel());
 				if (!this.wand.collect()) {
 					Dungeon.level.drop(this.wand, owner.pos);
 				}
@@ -242,10 +243,10 @@ public class MagesStaff extends MeleeWeapon {
 		wand.updateLevel();
 
 		//syncs the level of the two items.
-		int targetLevel = Math.max(this.trueLevel(), wand.trueLevel());
+		int targetLevel = this.trueLevel() + wand.trueLevel();
 
 		//if the staff's level is being overridden by the wand, preserve 1 upgrade
-		if (wand.trueLevel() >= this.trueLevel() && this.trueLevel() > 0) targetLevel++;
+//		if (wand.trueLevel() >= this.trueLevel() && this.trueLevel() > 0) targetLevel = wand.trueLevel();
 		
 		level(targetLevel);
 		this.wand = wand;
@@ -446,8 +447,7 @@ public class MagesStaff extends MeleeWeapon {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_cursed");
 					}
 
-					if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)
-						&& Dungeon.hero.buff(Talent.WandPreservationCounter.class) == null){
+					if (Dungeon.hero.hasTalent(Talent.WAND_PRESERVATION)){
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_talent");
 					} else {
 						bodyText += "\n\n" + Messages.get(MagesStaff.class, "imbue_lost");

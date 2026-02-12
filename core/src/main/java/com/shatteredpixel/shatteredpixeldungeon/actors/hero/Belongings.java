@@ -83,6 +83,7 @@ public class Belongings implements Iterable<Item> {
 	public Armor armor = null;
 	public Artifact artifact = null;
 	public KindofMisc misc = null;
+	public KindofMisc misc2 = null;
 	public Ring ring = null;
 
 	//used when thrown weapons temporary become the current weapon
@@ -147,6 +148,14 @@ public class Belongings implements Iterable<Item> {
 		}
 	}
 
+	public KindofMisc misc2(){
+		if (!lostInventory() || (misc2 != null && misc2.keptThroughLostInventory())){
+			return misc2;
+		} else {
+			return null;
+		}
+	}
+
 	public Ring ring(){
 		if (!lostInventory() || (ring != null && ring.keptThroughLostInventory())){
 			return ring;
@@ -169,6 +178,7 @@ public class Belongings implements Iterable<Item> {
 	private static final String ARMOR		= "armor";
 	private static final String ARTIFACT   = "artifact";
 	private static final String MISC       = "misc";
+	private static final String MISC2       = "misc2";
 	private static final String RING       = "ring";
 
 	private static final String SECOND_WEP = "second_wep";
@@ -181,6 +191,7 @@ public class Belongings implements Iterable<Item> {
 		bundle.put( ARMOR, armor );
 		bundle.put( ARTIFACT, artifact );
 		bundle.put( MISC, misc );
+		bundle.put( MISC2, misc2 );
 		bundle.put( RING, ring );
 		bundle.put( SECOND_WEP, secondWep );
 	}
@@ -204,6 +215,9 @@ public class Belongings implements Iterable<Item> {
 		misc = (KindofMisc) bundle.get(MISC);
 		if (misc() != null)         misc().activate( owner );
 
+		misc2 = (KindofMisc) bundle.get(MISC2);
+		if (misc2() != null)         misc2().activate( owner );
+
 		ring = (Ring) bundle.get(RING);
 		if (ring() != null)         ring().activate( owner );
 
@@ -219,6 +233,7 @@ public class Belongings implements Iterable<Item> {
 		armor = null;
 		artifact = null;
 		misc = null;
+		misc2 = null;
 		ring = null;
 	}
 	
@@ -373,6 +388,14 @@ public class Belongings implements Iterable<Item> {
 				Badges.validateItemLevelAquired(misc());
 			}
 		}
+		if (misc2() != null) {
+			if (ShardOfOblivion.passiveIDDisabled() && misc2() instanceof Ring){
+				((Ring) misc2()).setIDReady();
+			} else {
+				misc2().identify();
+				Badges.validateItemLevelAquired(misc2());
+			}
+		}
 		if (ring() != null) {
 			if (ShardOfOblivion.passiveIDDisabled()){
 				ring().setIDReady();
@@ -393,7 +416,7 @@ public class Belongings implements Iterable<Item> {
 	}
 	
 	public void uncurseEquipped() {
-		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), ring(), secondWep());
+		ScrollOfRemoveCurse.uncurse( owner, armor(), weapon(), artifact(), misc(), misc2(), ring(), secondWep());
 	}
 	
 	public Item randomUnequipped() {
@@ -425,7 +448,7 @@ public class Belongings implements Iterable<Item> {
 		
 		private Iterator<Item> backpackIterator = backpack.iterator();
 		
-		private Item[] equipped = {weapon, armor, artifact, misc, ring, secondWep};
+		private Item[] equipped = {weapon, armor, artifact, misc, misc2, ring, secondWep};
 		private int backpackIndex = equipped.length;
 		
 		@Override
@@ -469,10 +492,13 @@ public class Belongings implements Iterable<Item> {
 				equipped[3] = misc = null;
 				break;
 			case 4:
-				equipped[4] = ring = null;
+				equipped[4] = misc2 = null;
 				break;
 			case 5:
-				equipped[5] = secondWep = null;
+				equipped[5] = ring = null;
+				break;
+			case 6:
+				equipped[6] = secondWep = null;
 				break;
 			default:
 				backpackIterator.remove();

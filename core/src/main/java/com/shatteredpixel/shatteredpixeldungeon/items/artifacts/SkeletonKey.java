@@ -393,7 +393,7 @@ public class SkeletonKey extends Artifact {
 	@Override
 	public void charge(Hero target, float amount) {
 		if (charge < chargeCap && !cursed && target.buff(MagicImmune.class) == null){
-			partialCharge += 0.133f*amount;
+			partialCharge += 0.2f*amount;
 			while (partialCharge >= 1){
 				partialCharge--;
 				charge++;

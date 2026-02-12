@@ -545,7 +545,9 @@ public class Dungeon {
 	public static boolean souNeeded() {
 		int souLeftThisSet;
 		//3 SOU each floor set
-		souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 3);
+		//minha mudança: mínimo de 3, mas até 4 podem dropar
+		int souForSet = Random.Int(3,4);
+		souLeftThisSet = souForSet - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * souForSet);
 		if (souLeftThisSet <= 0) return false;
 
 		int floorThisSet = (depth % 5);
@@ -583,7 +585,7 @@ public class Dungeon {
 
 	public static boolean trinketCataNeeded(){
 		//one trinket catalyst on floors 1-3
-		return depth < 5 && !LimitedDrops.TRINKET_CATA.dropped() && Random.Int(4-depth) == 0;
+		return depth < 3 && !LimitedDrops.TRINKET_CATA.dropped() && Random.Int(2-depth) == 0;
 	}
 
 	public static boolean labRoomNeeded(){
