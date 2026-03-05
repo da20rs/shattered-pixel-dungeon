@@ -36,14 +36,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.ScrollHolder;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.Scroll;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfIdentify;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfLullaby;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicMapping;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRage;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTerror;
-import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.*;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.journal.Catalog;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
@@ -91,7 +84,9 @@ public class UnstableSpellbook extends Artifact {
 		scrolls.clear();
 
 		Class<?>[] scrollClasses = Generator.Category.SCROLL.classes;
-		float[] probs = Generator.Category.SCROLL.defaultProbsTotal.clone(); //array of primitives, clone gives deep copy.
+		float[] probs = new float[]{ 1, 3, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1 };
+//		float[] probs = Generator.Category.SCROLL.defaultProbsTotal.clone(); //array of primitives, clone gives deep copy.
+
 		int i = Random.chances(probs);
 
 		while (i != -1){
@@ -100,7 +95,7 @@ public class UnstableSpellbook extends Artifact {
 
 			i = Random.chances(probs);
 		}
-		scrolls.remove(ScrollOfTransmutation.class);
+//		scrolls.remove(ScrollOfTransmutation.class);
 	}
 
 	@Override
@@ -147,12 +142,14 @@ public class UnstableSpellbook extends Artifact {
 				//reduce the frequency of these scrolls by half
 				||((scroll instanceof ScrollOfIdentify ||
 				scroll instanceof ScrollOfRemoveCurse ||
+				scroll instanceof ScrollOfUpgrade ||
 				scroll instanceof ScrollOfMagicMapping) && Random.Int(2) == 0)
 				//cannot roll transmutation
-				|| (scroll instanceof ScrollOfTransmutation));
+//				|| (scroll instanceof ScrollOfTransmutation)
+				);
 
 		scroll.anonymize();
-		scroll.talentChance = 0;  //spellbook does not trigger on-scroll talents
+//		scroll.talentChance = 0;  //spellbook does not trigger on-scroll talents
 		curItem = scroll;
 		curUser = hero;
 
